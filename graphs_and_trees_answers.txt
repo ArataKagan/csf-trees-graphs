@@ -1,0 +1,289 @@
+1. What is a binary tree and what makes it unique to other trees?
+
+Binary tree is a type of data structure which is composed of 
+a single root node and child nodes. Each node can have utmost 
+two children nodes (leafs) consisting of a pyramid.   
+
+2. What is a heuristic?
+
+Heuristic is a technique to find optimal solution which solves a problem more
+quicker than traditional method. Even though the method is not the best or 
+perfect solution, it satisfies the requirment. It can be thought as a shortcut. 
+
+3. What is another problem besides the shortest-path problem that requires the use of heuristics?
+
+Speech recognition system which tries to make sense of the user's speech input by 
+the user's associated words, previous history, analysis of context.   
+
+
+4. What is the difference between a depth-first search and a breadth-first search?
+
+A breath-first search travels level by level starting from the root node. It first checks 
+its children and go one level down and check a row of all children until the search condition 
+is satisfied. 
+
+A depth-first serach checks leftmost path from the root to the leaf, then jumps up and check 
+right node and and so on. 
+
+5. Explain in your own words what an undirected, a-cyclic, unweighted graph is.
+
+The example could be a tree which allows you to travel both direction for each path and there is 
+no restriction for going either direction of the path. 
+In additon, since the tree graph doesn't get connected to the other nodes, it is a-cyclical graph.  
+ 
+
+6. What kind of graph is a binary search tree? 
+
+Undirected, a-cyclic, weighted graph 
+
+7. 
+
+Pass in the root node and the data you're looking for into the argument. 
+If the root node doesn't exit, return null. If the root node's value 
+is greater than the searching value, use recursion and assign 
+the root's left data and the searching value into the argument. 
+If the root node's value is smaller than the searching value, use 
+recursion and pass in the root's right data and the value. 
+
+
+search(node, data){
+		if(node === null){
+			return null;
+		} else if (node.data > data){
+			return this.search(node.left, data);
+		} else if (node.data < data){
+			return this.search(node.right, data);
+		} else {
+			return node;
+		}
+	}
+
+
+
+8.  
+
+Firstly, I need to define least common ancestor between two nodes. 
+Passing in the root and two nodes, if the root and either node's value
+matches, return the node.  Otherwise, keep searching by assigning 
+left and right value of the root node and recurse the function until the
+root's data hits the target value. 
+
+Based on the root node from the LCA function above, I need to find the 
+distance between those two nodes. By setting a counter for how many levels 
+the target values go down, and combining those two counts, you can get the 
+distance between two nodes. 
+
+LCA(root, n1, n2){
+	if(root === null){
+		return null;
+	} else if (root.data === n1 || root.data === n2){
+			return root;
+	} else {
+		let left = this.LCA(root.left, n1, n2);
+		let right = this.LCA(root.right, n1, n2); 
+
+		if(left !== null && right !== null){
+			return root;
+			} else {
+		if(left){
+			return left;
+		} else {
+			return right;
+			}
+		}
+	}
+} 
+
+findLevel(root, data, d, level){
+	if(root === null){
+		return; // returns undefined
+	} else if ( root.data === data ){
+		d.push(level);
+		return;
+	} else {
+		this.findLevel(root.left, data, d, level + 1);
+		this.findLevel(root.right, data, d, level + 1);
+	}
+}
+
+findDistance(root, n1, n2){
+	let lca = this.LCA(root, n1, n2); 
+	let d1 = [];
+	let d2 = [];
+	if(lca){
+		this.findLevel(lca, n1, d1, 0);
+		this.findLevel(lca, n2, d2, 0);
+		return d1[0] + d2[0]; 
+		}
+	else {
+		return -1;
+	}
+}
+
+
+
+CLASS BinarySearchTree 
+    this.left = None 
+    this.right = None 
+    this.val = key  
+
+    FUNCTION insertion(root, node)
+        IF root is None 
+            SET node to root 
+        ELSE 
+            IF node.val is greater than root.val 
+                IF root.right is None 
+                    SET node to root.right 
+                ELSE 
+                    recurse insertion for root.right  
+            ELSE 
+                IF root.left is None 
+                    SET node to root.left
+                ELSE 
+                    recurse insertion for root.left 
+                END IF 
+            END IF 
+        END IF 
+    END FUNCTION      
+
+
+    FUNCTION search(root, key) 
+        IF root is Null or root.val == key 
+            return root
+        END IF  
+
+        IF key is greater than root.val 
+            recurse search for root.right 
+        END IF 
+
+        return recurse search for root.left 
+        
+    END FUNCTION 
+
+
+END CLASS  
+
+class Node {
+	constructor(value){
+		this.data = value;
+		this.right = null;
+		this.left = null; 
+	}
+}
+
+
+class BinarySearchTree {
+	constructor(){
+		this.root = null;
+	}
+	
+	insert(data){
+		var newNode = new Node(data);
+		if(this.root === null) {
+			this.root = newNode;
+		} else {
+			this.insertNode(this.root, newNode)
+		}
+    }
+
+	insertNode(node, newNode){
+		if(node.data < newNode.data){
+			if(node.right === null){
+				node.right = newNode;
+			} else {
+				this.insertNode(node.right, newNode);
+				}
+		} else {
+			if(node.left === null){
+				node.left = newNode;
+			} else {
+				this.insertNode(node.left, newNode);
+			}
+		}
+    }
+    
+    search(node, data){
+		if(node === null){
+			return null;
+		} else if (node.data > data){
+			return this.search(node.left, data);
+		} else if (node.data < data){
+			return this.search(node.right, data);
+		} else {
+			return node;
+		}
+	}
+
+	getRootNode(){
+		return this.root;
+	}
+  
+    LCA(root, n1, n2){
+	if(root === null){
+		return null;
+	} else if (root.data === n1 || root.data === n2){
+			return root;
+	} else {
+		let left = this.LCA(root.left, n1, n2);
+		let right = this.LCA(root.right, n1, n2); 
+
+		if(left !== null && right !== null){
+			return root;
+			} else {
+		if(left){
+			return left;
+		} else {
+			return right;
+			}
+		}
+	}
+} 
+
+    findLevel(root, data, d, level){
+	if(root === null){
+		return; // returns undefined
+	} else if ( root.data === data ){
+		d.push(level);
+		return;
+	} else {
+		this.findLevel(root.left, data, d, level + 1);
+		this.findLevel(root.right, data, d, level + 1);
+	}
+  }
+
+  findDistance(root, n1, n2){
+	let lca = this.LCA(root, n1, n2); 
+	let d1 = [];
+	let d2 = [];
+	if(lca){
+		this.findLevel(lca, n1, d1, 0);
+		this.findLevel(lca, n2, d2, 0);
+		return d1[0] + d2[0]; 
+		}
+	else {
+		return -1;
+	}
+  }
+}
+
+var BST = new BinarySearchTree(); 
+  
+// Inserting nodes to the BinarySearchTree
+BST.insert(15); 
+BST.insert(25); 
+BST.insert(10); 
+BST.insert(7); 
+BST.insert(22); 
+BST.insert(17); 
+BST.insert(13); 
+BST.insert(5); 
+BST.insert(9); 
+BST.insert(27); 
+
+var root = BST.getRootNode();
+
+BST.findDistance(root, 15, 25)
+    
+
+
+
